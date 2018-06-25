@@ -25,7 +25,7 @@ runconsumer();
         int noMessageFound=0;
         while(true){
 
-            final ConsumerRecords<String,String> consumerRecords= (ConsumerRecords<String, String>) consumer.poll(1000);
+            final ConsumerRecords<String,String> consumerRecords= (ConsumerRecords<String, String>) consumer.poll(1000000);
             // 1000, milisaniye cinsinden consumer brokerinde herhangi bir kayıt bulunamazsa bekleyeceği zamandır.
             if(consumerRecords.count()==0){
                 noMessageFound++;
@@ -51,12 +51,12 @@ runconsumer();
         Producer<String, String> producer= (Producer<String, String>) ProducurCreator.creatProducer();
         for (int i=0;i<IKafkaConstants.MESSAGE_COUNT;i++){
 
-            ProducerRecord<String ,String> record=new ProducerRecord<String, String>(IKafkaConstants.TOPIK_NAME,"1","Kayıt sayısı"+i);
+            ProducerRecord<String ,String> record=new ProducerRecord<String, String>(IKafkaConstants.TOPIK_NAME," Kayıt sayısı"+i);
 
             try {
 
                 RecordMetadata metadata=producer.send(record).get();
-                System.out.println("Record key "+i+"patition "+metadata.partition()+"offset "+metadata.offset());
+                System.out.println("Record key "+i+"  patition "+metadata.partition()+" offset "+metadata.offset());
 
 
             } catch (InterruptedException e) {
