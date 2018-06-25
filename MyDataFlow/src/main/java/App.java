@@ -13,19 +13,19 @@ public class App {
 
 
     public static void main(String[] args) {
-
-
+runProducer();
+runconsumer();
 
     }
 
 
    protected static void runconsumer(){
 
-        Consumer<Long,String> consumer=ConsumerCreator.createConsumer();
+        Consumer<String,String> consumer= (Consumer<String, String>) ConsumerCreator.createConsumer();
         int noMessageFound=0;
         while(true){
 
-            final ConsumerRecords<Long,String> consumerRecords=consumer.poll(1000);
+            final ConsumerRecords<String,String> consumerRecords= (ConsumerRecords<String, String>) consumer.poll(1000);
             // 1000, milisaniye cinsinden consumer brokerinde herhangi bir kayıt bulunamazsa bekleyeceği zamandır.
             if(consumerRecords.count()==0){
                 noMessageFound++;
@@ -36,10 +36,10 @@ public class App {
 
             }
                 consumerRecords.forEach(record ->{
-                    System.out.println("Record Key"+record.key());
-                    System.out.println("Record Value"+record.value());
-                    System.out.println("Record Partition"+record.partition());
-                    System.out.println("Record Offset"+record.offset());
+                    System.out.print("CONSUMER --> RECİEVED Key: "+record.key());
+                    System.out.print("Record Value: "+record.value());
+                    System.out.print("Record Partition: "+record.partition());
+                    System.out.println("Record Offset: "+record.offset());
                 });
             //Broker için offset kaydeder
             consumer.commitAsync();
@@ -48,15 +48,15 @@ public class App {
     }
     protected static void runProducer()
     {
-        Producer<Long,String> producer=ProducurCreator.creatProducer();
+        Producer<String, String> producer= (Producer<String, String>) ProducurCreator.creatProducer();
         for (int i=0;i<IKafkaConstants.MESSAGE_COUNT;i++){
 
-            ProducerRecord<Long,String> record=new ProducerRecord<Long, String>(IKafkaConstants.TOPIK_NAME,"Kayıt sayısı"+i);
+            ProducerRecord<String ,String> record=new ProducerRecord<String, String>(IKafkaConstants.TOPIK_NAME,"1","Kayıt sayısı"+i);
 
             try {
 
                 RecordMetadata metadata=producer.send(record).get();
-                System.out.println("Record key"+i+"patition"+metadata.partition()+"offset"+metadata.offset());
+                System.out.println("Record key "+i+"patition "+metadata.partition()+"offset "+metadata.offset());
 
 
             } catch (InterruptedException e) {

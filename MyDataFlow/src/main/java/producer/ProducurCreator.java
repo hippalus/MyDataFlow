@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class ProducurCreator {
 
-    public static Producer<Long,String> creatProducer(){
+    public static Producer<String,?> creatProducer(){
         Properties properties=new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,IKafkaConstants.KAFKA_BROKERS);
         //Producer kimliği, Broker client kaynağını belirleyebilir.
@@ -23,7 +23,7 @@ public class ProducurCreator {
         // Kullanım durumunuzda anahtar olarak başka bir nesne kullanıyorsanız  ,
         // Kafka'nın Serializer arayüzünü uygulayarak ve serialize yöntemi geçersiz kılarak
         // özel seri hale getirici sınıfınızı oluşturabilirsiniz  .
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,LongSerializer.class.getName());
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
         //Değer nesnesini serileştirmek için kullanılacak sınıf. Bizim örneğimizde,
         // bizim değeriniz  String, bu yüzden StringSerializer anahtarı
         // serileştirmek için sınıfı kullanabiliriz  .
