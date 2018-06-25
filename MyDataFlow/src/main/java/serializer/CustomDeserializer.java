@@ -17,7 +17,7 @@ public class CustomDeserializer implements Deserializer<StringObject> {
         ObjectMapper mapper = new ObjectMapper();
         StringObject object = null;
         try {
-            object = mapper.readValue(data, StringObjectgituch.class);
+            object = mapper.readValue(data, StringObject.class);
         } catch (Exception exception) {
             System.out.println("Error in deserializing bytes " + exception);
         }
